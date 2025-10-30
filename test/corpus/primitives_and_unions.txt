@@ -1,0 +1,260 @@
+==================
+Simple Primitive Type
+==================
+
+string
+
+---
+
+(source_file
+  (type_definition
+    (primitive_type)))
+
+==================
+Multiple Primitive Types
+==================
+
+number
+
+---
+
+(source_file
+  (type_definition
+    (primitive_type)))
+
+==================
+Simple Union Type
+==================
+
+string | number
+
+---
+
+(source_file
+  (type_definition
+    (union_type
+      left: (primitive_type)
+      right: (primitive_type))))
+
+==================
+Three-way Union Type
+==================
+
+string | number | boolean
+
+---
+
+(source_file
+  (type_definition
+    (union_type
+      left: (union_type
+        left: (primitive_type)
+        right: (primitive_type))
+      right: (primitive_type))))
+
+==================
+Simple Array Type
+==================
+
+string[]
+
+---
+
+(source_file
+  (type_definition
+    (array_type
+      element: (primitive_type))))
+
+==================
+Array of Number
+==================
+
+number[]
+
+---
+
+(source_file
+  (type_definition
+    (array_type
+      element: (primitive_type))))
+
+==================
+Union with Array (array binds tighter)
+==================
+
+string | number[]
+
+---
+
+(source_file
+  (type_definition
+    (union_type
+      left: (primitive_type)
+      right: (array_type
+        element: (primitive_type)))))
+
+==================
+Parenthesized Union
+==================
+
+(string | number)
+
+---
+
+(source_file
+  (type_definition
+    (parenthesized_type
+      (type_definition
+        (union_type
+          left: (primitive_type)
+          right: (primitive_type))))))
+
+==================
+Array of Parenthesized Union
+==================
+
+(string | number)[]
+
+---
+
+(source_file
+  (type_definition
+    (array_type
+      element: (parenthesized_type
+        (type_definition
+          (union_type
+            left: (primitive_type)
+            right: (primitive_type)))))))
+
+==================
+Parenthesized Union of Three Types as Array
+==================
+
+(boolean | number | string)[]
+
+---
+
+(source_file
+  (type_definition
+    (array_type
+      element: (parenthesized_type
+        (type_definition
+          (union_type
+            left: (union_type
+              left: (primitive_type)
+              right: (primitive_type))
+            right: (primitive_type)))))))
+
+=============
+Unary expression literal types
+=============
+
+-1 | -2 | +1 | +2
+
+---
+
+(source_file
+  (type_definition
+    (union_type
+      (union_type
+        (union_type
+          (unary_expression
+            (number))
+              (unary_expression
+                (number)))
+            (unary_expression
+              (number)))
+          (unary_expression
+             (number)))))
+
+========
+Literals
+========
+
+"hello" | 42 | true | false | null | undefined | 'foo'
+
+---
+
+(source_file
+  (type_definition
+    (union_type
+      (union_type
+        (union_type
+          (union_type
+            (union_type
+              (union_type
+                (literal_type
+                  (ark_string
+                    (ark_double_string
+                      (string_fragment))))
+                (literal_type
+                  (number)))
+              (literal_type
+                (true)))
+            (literal_type
+              (false)))
+          (literal_type
+            (null)))
+        (literal_type
+          (undefined)))
+      (literal_type
+        (ark_string
+    (ark_single_string
+      (string_fragment)))))))
+
+======
+Tuples
+======
+
+[string, string]
+
+---
+
+(source_file
+  (type_definition
+    (tuple_type
+      (primitive_type)
+        (primitive_type))))
+
+===============
+Tuple of tuples
+===============
+
+[[number, number], [number, number]]
+
+---
+
+(source_file
+  (type_definition
+    (tuple_type
+      (tuple_type
+        (primitive_type)
+        (primitive_type))
+      (tuple_type
+        (primitive_type)
+        (primitive_type)))))
+
+==================
+All Primitive Types
+==================
+
+[string, number, boolean, null, undefined, bigint, symbol, unknown, any, never, void]
+
+---
+
+(source_file
+  (type_definition
+  (tuple_type
+    (primitive_type)
+    (primitive_type)
+    (primitive_type)
+    (literal_type
+      (null))
+    (literal_type
+      (undefined))
+    (primitive_type)
+    (primitive_type)
+    (primitive_type)
+    (primitive_type)
+    (primitive_type)
+    (primitive_type))))
